@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class CameraRotation : MonoBehaviour
@@ -9,7 +10,11 @@ public class CameraRotation : MonoBehaviour
     private float xMouse;
     private float yMouse;
     private float xRotation;
+    private float yRotation;
     public float speed = 1000f;
+    public Transform orientation;
+   
+    
 
 
     // Start is called before the first frame update
@@ -25,9 +30,13 @@ public class CameraRotation : MonoBehaviour
         xMouse = Input.GetAxis("Mouse X") * speed * Time.deltaTime;
         yMouse = Input.GetAxis("Mouse Y") * speed * Time.deltaTime;
 
+        yRotation += xMouse;
         xRotation -= yMouse;
         xRotation = Mathf.Clamp(xRotation, -90, 90);
-        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        player.Rotate(Vector3.up * xMouse);
+
+
+        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0f);
+        orientation.rotation = Quaternion.Euler(0 , yRotation, 0);
+       // player.Rotate(Vector3.up * xMouse);
     }
 }

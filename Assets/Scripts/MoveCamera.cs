@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class MoveCamera : MonoBehaviour
 {
-    public Transform CamPos;
+    public Transform targetObject;
+    public Vector3 camOffSet;
     // Start is called before the first frame update
     void Start()
     {
-        
+        camOffSet = transform.position - targetObject.transform.position;
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        transform.position = CamPos.position;
+        Vector3 newPosition = targetObject.transform.position + camOffSet;
+        transform.position = newPosition;
     }
 }
