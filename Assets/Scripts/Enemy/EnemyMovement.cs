@@ -50,4 +50,15 @@ public class EnemyMovement : MonoBehaviour
 
         badGuy.SetDestination(new Vector3(xPos, yPos, zPos));
     }
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            
+            Destroy(gameObject);
+        }
+    }
 }
