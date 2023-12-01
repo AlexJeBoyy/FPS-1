@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class BulletDespawn : MonoBehaviour
 {
-    [Header("Test")]
+    [Header("Bullet")]
     public GameObject bulletMarkPrefab;
-    public float despawnTime = 3f; // Adjust this value based on how long you want the bullet to exist
-    public string despawnTag = "Obstacle"; // Adjust this tag based on what objects should trigger despawn
-
+    public float despawnTime = 3f; // Lifetime of bullet
+    
     private void Start()
     {
 
@@ -23,32 +22,40 @@ public class BulletDespawn : MonoBehaviour
         {
             // If it does, despawn the bullet
             DespawnBullet();
-            // Instantiate the bullet mark at the collision point
-            InstantiateBulletMark(collision.contacts[0].point, collision.contacts[0].normal);
+        }
+        if (collision.gameObject.CompareTag("Untagged"))
+        {
+            Vector3 collisionPoint = collision.contacts[0].point;
+            Vector3 collisionNormal = collision.contacts[0].normal;
 
+            // Calculate the rotation
+            Quaternion rotation = Quaternion.LookRotation(collisionNormal, Vector3.up) * Quaternion.Euler(0f, 180f, 0f);
 
-            // Instantiate the bullet mark prefab at the collision point
-            if (bulletMarkPrefab != null)
-            {
-                
-                Instantiate(bulletMarkPrefab, collision.contacts[0].point, Quaternion.identity);
-            }
-            
+            // Create the bullet mark at the collision point with the correct rotation
+            GameObject bulletMark = Instantiate(bulletMarkPrefab, collisionPoint, rotation);
 
+            // Adjust the size of the bullet mark
+            bulletMark.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 
+            // Despawn the bullet
+            Destroy(gameObject);
         }
     }
     private void DespawnBullet()
     {
-        // This method is called either by collision or the despawn timer
+        // Destroy's the bullet
         Destroy(gameObject);
     }
     private void InstantiateBulletMark(Vector3 position, Vector3 normal)
     {
-        // Instantiate the bullet mark prefab
-        GameObject BulletMark = Instantiate(bulletMarkPrefab, position, Quaternion.LookRotation(normal));//problems
+        // Calculate the rotation based on the collision normal
+        Quaternion rotation = Quaternion.FromToRotation(Vector3.up, normal);
+
+        // Instantiate the bullet mark prefab with the correct rotation
+        GameObject bulletMark = Instantiate(bulletMarkPrefab, position, rotation);
+
         // Attach the BulletMarkController script to handle its lifetime
-        BulletMark bulletMarkController = BulletMark.AddComponent<BulletMark>();
+        BulletMark bulletMarkController = bulletMark.AddComponent<BulletMark>();
         bulletMarkController.lifeTime = 5f; // Adjust this value based on how long you want the bullet mark to be visible
     }
 
