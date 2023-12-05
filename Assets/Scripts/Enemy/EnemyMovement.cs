@@ -49,8 +49,8 @@ public class EnemyMovement : MonoBehaviour
         zPos = Random.Range(zMin, zMax);
 
         badGuy.SetDestination(new Vector3(xPos, yPos, zPos));
-        Animator anim = GetComponent<Animator>();
-        anim.Play("Walk");
+       //Animator anim = GetComponent<Animator>();
+        //anim.Play("Walk");
     }
 
 

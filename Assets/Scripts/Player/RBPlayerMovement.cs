@@ -55,7 +55,7 @@ public class RBPlayerMovement : MonoBehaviour
         if (grounded)
             rb.drag = groundDrag;
         else
-            rb.drag = 0;
+            rb.drag = 2;
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
@@ -78,7 +78,7 @@ public class RBPlayerMovement : MonoBehaviour
 
         if(Input.GetKey(jumpKey) && readyToJump && grounded)
         {
-            Debug.Log("ello");
+            
             readyToJump = false;
 
             Jump();
