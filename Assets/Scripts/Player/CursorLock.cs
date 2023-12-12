@@ -19,7 +19,7 @@ public class CursorLock : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            Debug.Log("YrMom");
+            
         }
         else
         {
