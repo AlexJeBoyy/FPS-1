@@ -5,7 +5,7 @@ using UnityEngine;
 public class GunBobbing : MonoBehaviour
 {
     float bobbingCounter = 0f;
-    float bobbingMagnitude = .01f;
+    float bobbingMagnitude = .015f;
     // Start is called before the first frame update
     void Start()
     {

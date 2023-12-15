@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8377151309574368355}
   - component: {fileID: 4894925909455266758}
   - component: {fileID: 7208770312383436556}
-  - component: {fileID: 9154215057541871320}
+  - component: {fileID: 1172269189203340948}
   m_Layer: 0
   m_Name: PP_Birch_Tree_05
   m_TagString: Untagged
@@ -84,14 +84,14 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &9154215057541871320
-MeshCollider:
+--- !u!136 &1172269189203340948
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9154215057541871321}
-  m_Material: {fileID: 13400000, guid: 3dcc50299313d8f4f93906099d87d326, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -102,7 +102,8 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -808811649734903215, guid: d721af70c8ba1ab4daa81f30de0dbb54, type: 3}
+  serializedVersion: 2
+  m_Radius: 0.332762
+  m_Height: 8.252353
+  m_Direction: 1
+  m_Center: {x: -0.02, y: 4.1261764, z: 0.07}

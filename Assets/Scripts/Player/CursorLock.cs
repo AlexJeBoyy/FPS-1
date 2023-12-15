@@ -15,7 +15,7 @@ public class CursorLock : MonoBehaviour
     void Update()
     {
         Scene scene = SceneManager.GetActiveScene();
-        if (scene.name == "Level1")
+        if (scene.name == "Level1" || scene.name == "Level2")
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;

@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] float maxHealth = 100f;
+    [SerializeField] float maxHealth = 500f;
     private float healthPoints = 100f;
     [SerializeField] private Slider slider;
     private float lastDamageTime = 0f;
@@ -17,19 +17,20 @@ public class Health : MonoBehaviour
     private void Start()
     {
         healthPoints = maxHealth;
+        lastDamageTime = Time.time;
     }
     private void Update()
     {
         if (slider != null)
         {
             slider.value = healthPoints;
-            if (!isRegenerating && Time.time- lastDamageTime >= 10f)
+            if (!isRegenerating && Time.time - lastDamageTime >= 10f)
             {
-                isRegenerating=true;
+                isRegenerating = true;
             }
             if (isRegenerating)
             {
-                // Start regenerating
+                
                 RegenerateHealth();
             }
 
@@ -44,15 +45,16 @@ public class Health : MonoBehaviour
 
         if (healthPoints <= 0)
         {
-            SceneManager.LoadScene("Menu");
+            SceneManager.LoadScene("Died");
         }
     }
-    void OnCollisionEnter(Collision collision)
+
+    void OnCollisionStay(Collision collision)
     {
-        
+
         if (collision.gameObject.CompareTag("NPC"))
         {
-            TakeDamage(10);
+            TakeDamage(1);
         }
     }
 

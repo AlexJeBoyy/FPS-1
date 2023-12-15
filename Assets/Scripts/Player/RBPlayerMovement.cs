@@ -35,12 +35,20 @@ public class RBPlayerMovement : MonoBehaviour
 
     Rigidbody rb;
 
+    //Grapling
+    public bool freeze;
+    public bool activeGraple;
+    private bool enableMovementOnNextTouch;
+
     // Start is called before the first frame update
     void Start()
     {
+        
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         currentSpeed = moveSpeed;
+
+
     }
     private void Update()
     {
@@ -52,10 +60,10 @@ public class RBPlayerMovement : MonoBehaviour
         SpeedControl();
 
         //handle drag
-        if (grounded)
+        if (grounded && !activeGraple)
             rb.drag = groundDrag;
         else
-            rb.drag = 2;
+            rb.drag = 0;
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
@@ -65,6 +73,17 @@ public class RBPlayerMovement : MonoBehaviour
         {
             moveSpeed = currentSpeed;
         }
+
+
+        //Freeze things with grapling hook
+
+        if (freeze)
+        {
+            moveSpeed = 0;
+            rb.velocity = Vector3.zero;
+        }
+
+
     }
 
     private void FixedUpdate() //called before an update
@@ -76,19 +95,23 @@ public class RBPlayerMovement : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        if(Input.GetKey(jumpKey) && readyToJump && grounded)
+        if (Input.GetKey(jumpKey) && readyToJump && grounded)
         {
-            
+
             readyToJump = false;
 
             Jump();
 
             Invoke(nameof(ResetJump), jumpCooldown);
         }
+
+
     }
 
     private void MovePlayer() //moves the player
     {
+        if (activeGraple) return;
+
         //calculates movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
@@ -96,7 +119,7 @@ public class RBPlayerMovement : MonoBehaviour
         if (grounded)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
-            
+
         }
         //in air
         else if (!grounded)
@@ -107,6 +130,7 @@ public class RBPlayerMovement : MonoBehaviour
 
     private void SpeedControl()//makes it so that the speed vant supcass the amount we set it to
     {
+        if (activeGraple) return;
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         if (flatVel.magnitude > moveSpeed)
         {
@@ -127,4 +151,53 @@ public class RBPlayerMovement : MonoBehaviour
     {
         readyToJump = true;
     }
+
+    public Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)
+    {
+        float gravity = Physics.gravity.y;
+        float displacementY = endPoint.y - startPoint.y;
+        Vector3 displacementXZ = new Vector3(endPoint.x - startPoint.x, 0f, endPoint.z - startPoint.z);
+
+        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * trajectoryHeight);
+        Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * trajectoryHeight / gravity)
+            + Mathf.Sqrt(2 * (displacementY - trajectoryHeight) / gravity));
+
+        return velocityXZ + velocityY;
+    }
+
+    public void JumpToPosition(Vector3 tragetposition, float trajectoryHeight)
+    {
+        
+        activeGraple = true;
+
+        velocityToSet = CalculateJumpVelocity(transform.position, tragetposition, trajectoryHeight);
+        Invoke(nameof(SetVelocity), 0.1f);
+
+        Invoke(nameof(ResetRestrictions), 3f);
+    }
+
+    private Vector3 velocityToSet;
+    private void SetVelocity()
+    {
+        enableMovementOnNextTouch = true;
+        rb.velocity = velocityToSet;
+    }
+
+    public void ResetRestrictions()
+    {
+        activeGraple = false;
+        
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (enableMovementOnNextTouch)
+        {
+            enableMovementOnNextTouch = false;
+            ResetRestrictions();
+
+            GetComponent<GraplingHook>().StopGrapple();
+        }
+    }
 }
+
+   

@@ -52,6 +52,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pistol 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7672430382624803954, guid: 687df4ee495d74544b0ff78ca63ecd6a, type: 3}
+      propertyPath: spread
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7672430382624803954, guid: 687df4ee495d74544b0ff78ca63ecd6a, type: 3}
+      propertyPath: allowInvoke
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7672430382624803954, guid: 687df4ee495d74544b0ff78ca63ecd6a, type: 3}
+      propertyPath: allowButtonHold
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7672430382624803954, guid: 687df4ee495d74544b0ff78ca63ecd6a, type: 3}
+      propertyPath: timeBetweenShooting
+      value: 0.01
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

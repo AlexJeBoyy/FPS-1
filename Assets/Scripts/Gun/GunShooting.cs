@@ -43,6 +43,10 @@ public class GunShooting : MonoBehaviour
     //bug fixing :D
     public bool allowInvoke = true;
 
+    //Gun shot
+    public new AudioSource audio;
+    public AudioSource reload;
+
     private void Awake()
     {
         //make sure magazine is full
@@ -50,18 +54,27 @@ public class GunShooting : MonoBehaviour
         readyToShoot = true;
     }
 
+    private void Start()
+    {
+        audio = GetComponents<AudioSource>()[0];
+        reload = GetComponents<AudioSource>()[1];
+    }
     private void Update()
     {
         MyInput();
-
+        
         //Set ammo display, if it exists :D
         if (ammunitionDisplay != null)
             ammunitionDisplay.SetText(bulletsLeft / bulletsPerTap + " / " + magazineSize / bulletsPerTap);
+        
     }
     private void MyInput()
     {
         //Check if allowed to hold down button and take corresponding input
-        if (allowButtonHold) shooting = Input.GetKey(KeyCode.Mouse0);
+        if (allowButtonHold)
+        {
+            shooting = Input.GetKey(KeyCode.Mouse0);
+        }
         else shooting = Input.GetKeyDown(KeyCode.Mouse0);
 
         //Reloading 
@@ -74,7 +87,7 @@ public class GunShooting : MonoBehaviour
         {
             //Set bullets shot to 0
             bulletsShot = 0;
-
+            audio.Play();
             Shoot();
         }
     }
@@ -90,7 +103,10 @@ public class GunShooting : MonoBehaviour
         //check if ray hits something
         Vector3 targetPoint;
         if (Physics.Raycast(ray, out hit))
+        {
             targetPoint = hit.point;
+            
+        }
         else
             targetPoint = ray.GetPoint(75); //Just a point far away from the player
 
@@ -104,22 +120,26 @@ public class GunShooting : MonoBehaviour
         //Calculate new direction with spread
         Vector3 directionWithSpread = directionWithoutSpread + new Vector3(x, y, 0); //Just add spread to last direction
 
+
         //Instantiate bullet/projectile
         GameObject currentBullet = Instantiate(bullet, attackPoint.position, Quaternion.identity); //store instantiated bullet in currentBullet
+
+        
+
         //Rotate bullet to shoot direction
         currentBullet.transform.forward = directionWithSpread.normalized;
 
         //Add forces to bullet
         currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * shootForce, ForceMode.Impulse);
         currentBullet.GetComponent<Rigidbody>().AddForce(fpsCam.transform.up * upwardForce, ForceMode.Impulse);
-
+        
         //Instantiate muzzle flash, if you have one
         if (muzzleFlash != null)
             Instantiate(muzzleFlash, attackPoint.position, Quaternion.identity);
 
         bulletsLeft--;
         bulletsShot++;
-
+        
         //Invoke resetShot function (if not already invoked), with your timeBetweenShooting
         if (allowInvoke)
         {
@@ -133,6 +153,9 @@ public class GunShooting : MonoBehaviour
         //if more than one bulletsPerTap make sure to repeat shoot function
         if (bulletsShot < bulletsPerTap && bulletsLeft > 0)
             Invoke("Shoot", timeBetweenShots);
+
+
+
     }
     private void ResetShot()
     {
@@ -145,6 +168,7 @@ public class GunShooting : MonoBehaviour
     {
         reloading = true;
         Invoke("ReloadFinished", reloadTime); //Invoke ReloadFinished function with your reloadTime as delay
+        reload.Play();
     }
     private void ReloadFinished()
     {
@@ -152,5 +176,9 @@ public class GunShooting : MonoBehaviour
         bulletsLeft = magazineSize;
         reloading = false;
     }
-  
+
+    //private void ShotAudio()
+    //{
+    //    shotAudio.Play();
+    //}
 }

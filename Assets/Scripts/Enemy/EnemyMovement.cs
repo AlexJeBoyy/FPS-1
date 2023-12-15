@@ -21,9 +21,11 @@ public class EnemyMovement : MonoBehaviour
 
     private float closeEnough = 3;
 
+    private EnemyCounter enemyCounter;
     // Start is called before the first frame update
     void Start()
     {
+        enemyCounter = GameObject.FindObjectOfType<EnemyCounter>();
         xMin = -squareOfMovement;
         zMin = -squareOfMovement;
         xMax = squareOfMovement;
@@ -49,8 +51,7 @@ public class EnemyMovement : MonoBehaviour
         zPos = Random.Range(zMin, zMax);
 
         badGuy.SetDestination(new Vector3(xPos, yPos, zPos));
-       //Animator anim = GetComponent<Animator>();
-        //anim.Play("Walk");
+       
     }
 
 
@@ -61,6 +62,7 @@ public class EnemyMovement : MonoBehaviour
         {
             
             Destroy(gameObject);
+            enemyCounter.IncrementKillCount();
         }
     }
 }

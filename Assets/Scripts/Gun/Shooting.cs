@@ -8,23 +8,18 @@ public class Shooting : MonoBehaviour
     private Ray ray;
     private RaycastHit hit;
 
-
-   
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
             ray = cam.ScreenPointToRay(Input.mousePosition);
-            if(Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.tag.Equals("NPC"))
+                if (hit.collider.CompareTag("NPC"))
                 {
                     Destroy(hit.collider.gameObject);
                 }
-                else
-                {
-                    
-                }
+
             }
         }
     }
