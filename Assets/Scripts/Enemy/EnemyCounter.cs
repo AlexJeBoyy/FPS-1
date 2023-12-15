@@ -12,9 +12,11 @@ public class EnemyCounter : MonoBehaviour
 
     public void Start()
     {
+
         enemySpawner = GameObject.FindObjectOfType<EnemySpawner>();
         TotalAmount = enemySpawner.enemyMax;
-        killCountText.text = "Kills: " + "0" + "/" + TotalAmount;
+        WinAmount = TotalAmount - 5;
+        killCountText.text = "Kills: " + "0" + "/" + WinAmount;
     }
     public void IncrementKillCount()
     {
@@ -23,7 +25,7 @@ public class EnemyCounter : MonoBehaviour
         // Update the TextMeshProUGUI to display the new kill count
         if (killCountText != null)
         {
-            killCountText.text = "Kills: " + enemyKillCount + "/" + TotalAmount;
+            killCountText.text = "Kills: " + enemyKillCount + "/" + WinAmount;
         }
         
         if (enemyKillCount == WinAmount)

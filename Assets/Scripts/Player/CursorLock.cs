@@ -5,26 +5,52 @@ using UnityEngine.SceneManagement;
 
 public class CursorLock : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private PauseMenu pm;
+
+
     void Start()
     {
-        
+        pm = GetComponent<PauseMenu>();
+
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
+
+        bool pauseMenu = pm.GameIsPaused;
+
+
         Scene scene = SceneManager.GetActiveScene();
-        if (scene.name == "Level1" || scene.name == "Level2")
+        
+         if (scene.name == "Level1" || scene.name == "Level2")
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            
+            if (pauseMenu)
+            {
+                UnlockCursor();
+            }
+            else
+            {
+                LockCursor();
+            }
+           
+
         }
         else
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            UnlockCursor();
         }
+    }
+
+    private void LockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    private void UnlockCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }

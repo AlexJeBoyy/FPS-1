@@ -20,13 +20,20 @@ public class LoadScene : MonoBehaviour
     public void Lvl1Load()
     {
         SceneManager.LoadScene("Level1");
+
     }
     public void MenuLoad()
     {
         SceneManager.LoadScene("Menu");
+        Time.timeScale = 1.0f;
     }
     public void Lvl2Load()
     {
         SceneManager.LoadScene("Level2");
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
