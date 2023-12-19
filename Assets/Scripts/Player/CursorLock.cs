@@ -5,8 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class CursorLock : MonoBehaviour
 {
+
     private PauseMenu pm;
 
+    public bool pauseMenu = false;
 
     void Start()
     {
@@ -18,13 +20,13 @@ public class CursorLock : MonoBehaviour
     private void Update()
     {
 
-        bool pauseMenu = pm.GameIsPaused;
-
 
         Scene scene = SceneManager.GetActiveScene();
-        
-         if (scene.name == "Level1" || scene.name == "Level2")
+
+        if (scene.name == "Level1" || scene.name == "Level2")
         {
+            pauseMenu = pm.GameIsPaused;
+
             if (pauseMenu)
             {
                 UnlockCursor();
@@ -33,8 +35,12 @@ public class CursorLock : MonoBehaviour
             {
                 LockCursor();
             }
-           
 
+
+        }
+        else if (scene.name == "Died")
+        {
+            UnlockCursor();
         }
         else
         {

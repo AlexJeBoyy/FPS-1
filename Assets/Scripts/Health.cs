@@ -54,7 +54,7 @@ public class Health : MonoBehaviour
 
         if (collision.gameObject.CompareTag("NPC"))
         {
-            TakeDamage(1);
+            TakeDamage(3);
         }
     }
 
