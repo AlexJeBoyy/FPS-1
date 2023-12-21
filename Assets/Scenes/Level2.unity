@@ -1584,7 +1584,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   lr: {fileID: 1305610520}
-  maxGrappleDistance: 25
+  maxGrappleDistance: 1000
   grappleDelayTime: 0.1
   overshootYAxis: 0
   grapplingCd: 1
@@ -2328,6 +2328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f5b4fa6b501347448049fb878b6efe8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseMenu: 0
 --- !u!114 &1379815598
 MonoBehaviour:
   m_ObjectHideFlags: 0

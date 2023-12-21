@@ -35,8 +35,6 @@ public class CursorLock : MonoBehaviour
             {
                 LockCursor();
             }
-
-
         }
         else if (scene.name == "Died")
         {

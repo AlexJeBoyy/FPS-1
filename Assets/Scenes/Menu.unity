@@ -362,6 +362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f5b4fa6b501347448049fb878b6efe8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseMenu: 0
 --- !u!1 &264099257
 GameObject:
   m_ObjectHideFlags: 0
@@ -945,8 +946,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 31, y: -23}
-  m_SizeDelta: {x: 323.696, y: 131.843}
+  m_AnchoredPosition: {x: -30.915, y: -23}
+  m_SizeDelta: {x: 199.866, y: 131.843}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1151394374
 MonoBehaviour:
@@ -972,7 +973,8 @@ MonoBehaviour:
 
     3 : Grappling Gun
 
-    G : Grappling'
+    G : Grappling (when grapling gun is
+    equipd)'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c46d663956344c4aa05f11087926d0c, type: 2}
   m_sharedMaterial: {fileID: -2658293195565737095, guid: 8c46d663956344c4aa05f11087926d0c, type: 2}
