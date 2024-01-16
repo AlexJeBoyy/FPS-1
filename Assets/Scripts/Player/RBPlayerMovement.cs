@@ -128,7 +128,7 @@ public class RBPlayerMovement : MonoBehaviour
         }
     }
 
-    private void SpeedControl()//makes it so that the speed vant supcass the amount we set it to
+    private void SpeedControl()//handles the speed whit the grapple
     {
         if (activeGraple) return;
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
